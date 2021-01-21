@@ -28,17 +28,18 @@
             <div class="col-md-4 bg-light">
                 <!-- search box and search history -->
                 <h3>Search for a City:</h3>
-                <input type="text" placeholder="Search..">
-                <button type="submit" class="btn btn-primary"><i class="fas fa-search-location"></i></button>
+                <input id="enter-city" type="text" placeholder="Search..">
+                <button type="submit" class="btn btn-primary"><i class="fas fa-search-location" id="search-btn"></i></button>
                 <div>
-                    <button class="btn btn-primary" type="button" id="clear-history">Clear history</button>
+                    <button class="btn btn-primary" type="button" id="clear-btn">Clear history</button>
                     <ul class="list-group">
                     </ul>
                 </div>
             </div>
+            <!-- area to display weather data -->
             <div class="col-md-8">
                 <div class="row">
-                    <div class="col-md-8" id="current-weather">
+                    <div class="col-md-8 d-none" id="current-weather">
                         <div class="card-body">
                             <h3 id="city-name" class="city-name align-middle"></h3>
                             <img id="current-pic" alt="">
@@ -47,7 +48,7 @@
                             <p id="wind-speed"></p>
                             <p id="UV-index"></p>
                         </div>
-                        <div class="row" id="five-header">
+                        <div class="row d-none" id="five-header">
                             <div class="col-12">
                                 <h3>5 Day Forecast</h3>
                             </div>
@@ -65,10 +66,6 @@
         </div>
     </div>
     </div>
-
-
-
-
 
     <script src="script.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

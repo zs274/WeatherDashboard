@@ -34,9 +34,20 @@ function getWeather(cityName) {
         
         var lat = response.data.coord.lat;
         var lon = response.data.coord.lon;
+        var UVQueryUrl = "https://api.openweathermap.org/data/2.5/uvi/forecast?lat=" + lat + "&lon=" + lon + "&appid=" + APIKey;
+        $.ajax({
+            url: UVQueryUrl,
+            method: "GET"
+        }).then(function(response){
+            var UVIndex = document.createElement("p");
+            UVIndex.setAttribute("class", "badge badge-danger");
+            UVIndex.innerHTML = response.data[0].value;
+            $("#uvEl").html = "UV index: ";
+            $("#uvEl").append(UVIndex);
+           })
 
-        
+
     })
 }
 
-}
+});

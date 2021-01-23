@@ -28,11 +28,12 @@
             <div class="col-md-4 bg-light">
                 <!-- search box and search history -->
                 <h3>Search for a City:</h3>
-                <input id="enter-city" type="text" placeholder="Search..">
-                <button type="submit" class="btn btn-primary"><i class="fas fa-search-location" id="search-btn"></i></button>
+                <input id="input-city" type="text" placeholder="Search..">
+                <button type="submit" class="btn btn-primary"><i class="fas fa-search-location"
+                        id="search-btn"></i></button>
                 <div>
                     <button class="btn btn-primary" type="button" id="clear-btn">Clear history</button>
-                    <ul class="list-group">
+                    <ul class="list-group" id="search-history">
                     </ul>
                 </div>
             </div>
@@ -67,12 +68,14 @@
     </div>
     </div>
 
-    <script src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
+        integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
+        crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="text/javascript">
         var queryURL = "https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude={part}&appid={API key}" //needs editing may not use this particular API
-
     </script>
+    <script src="script.js"></script>
 </body>
 
 </html>

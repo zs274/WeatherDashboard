@@ -7,7 +7,7 @@ function startPage() {
     var nameEl = document.getElementById("city-name");
     var currentPicEl = document.getElementById("current-pic");
     var currentTempEl = document.getElementById("temperature");
-    var currentHumidityEl = document.getElementById("humidity"); 4
+    var currentHumidityEl = document.getElementById("humidity");
     var currentWindEl = document.getElementById("wind-speed");
     var currentUVEl = document.getElementById("UV-index");
     var historyEl = document.getElementById("history");
@@ -15,7 +15,7 @@ function startPage() {
     var fiveDayEl = document.getElementById("five-header");
     var searchHistory = JSON.parse(localStorage.getItem("search")) || [];
 
-    var APIKey = "02b7a9ea356212ecbd2304bcb80a5365"
+    var APIKey = "02b7a9ea356212ecbd2304bcb80a5365";
 
     // getting current weather
     function getWeather(cityName) {
@@ -43,28 +43,28 @@ function startPage() {
             var lon = response.coord.lon;
             var cityID = response.id;
 
-            var UVQueryURL = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&appid=" + APIKey + "&cnt=1";
+            var UVQueryURL = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&appid=" + APIKey + "&units=metric";
             $.ajax({
                 url: UVQueryURL,
                 method: "GET"
             }).then(function (uvresponse) {
                 var UVindex = document.createElement("span");
                 //  changes colour depending on uv index, using bootstrap badges
-                if (uvresponse.current.uvi < 5) {
-                    UVindex.setAttribute("class", "badge badge-success");
+                if (uvresponse.current.uvi < 3) {
+                    UVindex.setAttribute("class", "badge bg-success");
                 }
-                else if (uvresponse.current.uvi < 8) {
-                    UVindex.setAttribute("class", "badge badge-warning");
+                else if (uvresponse.current.uvi > 3 && uvresponse.current.uvi < 7) {
+                    UVindex.setAttribute("class", "badge bg-warning");
                 }
                 else {
-                    UVindex.setAttribute("class", "badge badge-danger");
+                    UVindex.setAttribute("class", "badge bg-danger");
                 }
-                // UVindex.innerHTML = response.list[0].value;
-                currentUVEl.innerHTML = "UV:";
+                UVindex.innerHTML = uvresponse.current.uvi;
+                currentUVEl.innerHTML = "UV: ";
                 currentUVEl.append(UVindex);
             });
 
-        
+
             var foreQueryURL = "https://api.openweathermap.org/data/2.5/forecast?id=" + cityID + "&appid=" + APIKey;
             $.ajax({
                 url: foreQueryURL,
@@ -91,45 +91,36 @@ function startPage() {
                     forecastWeatherEl.setAttribute("src", "https://openweathermap.org/img/wn/" + response.list[foreIndex].weather[0].icon + ".png");
                     forecastEl[i].append(forecastWeatherEl);
                     var forecastTempEl = document.createElement("p");
-                    forecastTempEl.innerHTML = "Temp: " + k2c(response.list[foreIndex].main.temp + "°C");
+                    forecastTempEl.innerHTML = "Temp: " + k2c(response.list[foreIndex].main.temp) + "°C";
                     forecastEl[i].append(forecastTempEl);
                     var forecastHumidityEl = document.createElement("p");
                     forecastHumidityEl.innerHTML = "Humidity: " + response.list[foreIndex].main.humidity + "%";
                     forecastEl[i].append(forecastHumidityEl);
 
                 }
-
-
-            })
-
-
-
-        })
+            });
+        });
     }
-
 
     function k2c(K) {
         return Math.floor(K - 273.15);
     }
-
-    clearEl.addEventListener("click", function () {
-        localStorage.clear();
-        searchHistory = [];
-        createSearchHistory();
-    })
-
 
     searchEl.addEventListener("click", function () {
         var searchTerm = inputEl.value;
         getWeather(searchTerm);
         searchHistory.push(searchTerm);
         localStorage.setItem("search", JSON.stringify(searchHistory));
-        createSearchHistory();
-    })
+        renderSearchHistory();
+    });
 
-    
+    clearEl.addEventListener("click", function () {
+        localStorage.clear();
+        searchHistory = [];
+        renderSearchHistory();
+    });
 
-    function createSearchHistory() {
+    function renderSearchHistory() {
         historyEl.innerHTML = "";
         for (i = 0; i < searchHistory.length; i++) {
             var historyItem = document.createElement("input");
@@ -139,15 +130,15 @@ function startPage() {
             historyItem.setAttribute("value", searchHistory[i]);
             historyItem.addEventListener("click", function () {
                 getWeather(historyItem.value);
-            })
+            });
             historyEl.append(historyItem);
         }
     }
 
-    createSearchHistory();
+    renderSearchHistory();
     if (searchHistory.length > 0) {
         getWeather(searchHistory[searchHistory.length - 1]);
     }
 }
 
-startPage()
+startPage();

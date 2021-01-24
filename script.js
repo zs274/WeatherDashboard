@@ -41,6 +41,7 @@ function startPage() {
             // need another url for the UV index and lat and lon coords to use for the forecast API
             var lat = response.coord.lat;
             var lon = response.coord.lon;
+            var cityID = response.id;
 
             var UVQueryURL = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&appid=" + APIKey + "&cnt=1";
             $.ajax({
@@ -63,12 +64,12 @@ function startPage() {
                 currentUVEl.append(UVindex);
             });
 
-            var cityID = response.main.city.id;
+        
             var foreQueryURL = "https://api.openweathermap.org/data/2.5/forecast?id=" + cityID + "&appid=" + APIKey;
             $.ajax({
                 url: foreQueryURL,
                 method: "GET"
-            }).then(function (reponse) {
+            }).then(function (response) {
 
                 fiveDayEl.classList.remove("d-none");
 
@@ -78,7 +79,7 @@ function startPage() {
                     var foreIndex = i * 8 + 4;
                     var foreDate = new Date(response.list[foreIndex].dt * 1000);
                     var foreDay = foreDate.getDate();
-                    var foreMonth = foreDate.getMonth();
+                    var foreMonth = foreDate.getMonth() + 1;
                     var foreYear = foreDate.getFullYear();
                     var foreDateEl = document.createElement("p");
                     foreDateEl.setAttribute("class", "forecast-date");
@@ -87,13 +88,13 @@ function startPage() {
 
 
                     var forecastWeatherEl = document.createElement("img");
-                    forecastWeatherEl.setAttribute("src", "https://openweathermap.org/img/wn/" + response.list[forecastIndex].weather[0].icon + ".png");
+                    forecastWeatherEl.setAttribute("src", "https://openweathermap.org/img/wn/" + response.list[foreIndex].weather[0].icon + ".png");
                     forecastEl[i].append(forecastWeatherEl);
                     var forecastTempEl = document.createElement("p");
-                    forecastTempEl.innerHTML = "Temp: " + k2c(response.list[forecastIndex].main.temp + "°C");
+                    forecastTempEl.innerHTML = "Temp: " + k2c(response.list[foreIndex].main.temp + "°C");
                     forecastEl[i].append(forecastTempEl);
                     var forecastHumidityEl = document.createElement("p");
-                    forecastHumidityEl.innerHTML = "Humidity: " + response.list[forecastIndex].main.humidity + "%";
+                    forecastHumidityEl.innerHTML = "Humidity: " + response.list[foreIndex].main.humidity + "%";
                     forecastEl[i].append(forecastHumidityEl);
 
                 }

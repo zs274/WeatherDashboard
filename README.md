@@ -21,3 +21,7 @@ I struggled at first with the API but after reading the documentation it became 
 ## Overall thoughts
 
 I think that I complicated things for myself and then decided to start over when it was too late. Despite working on it all day I think I needed a few more hours to fix some of the bugs with local storage. I learned a lot about API's from this task so it was very worthwhile, however I need to study JQuery more and become comfortable with it. 
+
+## Deployed URL: https://zs274.github.io/WeatherDashboard/
+
+![passgen](https://user-images.githubusercontent.com/74627515/105646690-2f35e300-5e99-11eb-9158-17b6bef7f15d.png)
